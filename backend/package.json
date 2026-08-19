@@ -1,7 +1,7 @@
 {
   "name": "resenhas-backend",
   "version": "1.0.0",
-  "description": "API REST para gerenciamento de livros e resenhas",
+  "description": "Interface web para gerenciamento de livros e resenhas.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

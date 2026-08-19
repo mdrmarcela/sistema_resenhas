@@ -35,6 +35,15 @@ main {
     flex-wrap: wrap;
   }
 
+  .text-muted {
+  color: #54595e !important;
+}
+
+   .form-text {
+  color: #54595e;
+}
+
+
   form {
     width: 100%;
   }
@@ -54,4 +63,10 @@ main {
     width: 100%;
     text-align: center;
   }
+}
+
+/* Melhora o contraste de textos secundários */
+.text-muted,
+.form-text {
+  color: #54595e !important;
 }

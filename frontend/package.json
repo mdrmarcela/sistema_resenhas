@@ -1,39 +1,32 @@
 {
-    "name": "API-Resenhas-Desenvolvimento Front-End",
-    "homepage": "https://github.com/mdrmarcela/API---Resenha---Desenvolvimento-Front-End",
-    "private": false,
-    "version": "1.0.0",
-    "description": "Minha biblioteca de resenhas de livros.",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "lint": "eslint .",
-        "preview": "vite preview",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d dist"
-    },
-    "author": "Marcela Matos Dutra Rodrigues",
-    "license": "MIT",
-    "dependencies": {
-        "bootstrap": "^5.3.8",
-        "jwt-decode": "^4.0.0",
-        "react": "^19.2.3",
-        "react-bootstrap": "^2.10.10",
-        "react-dom": "^19.2.3",
-        "react-google-recaptcha": "^3.1.0",
-        "react-router-dom": "^7.11.0"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.35.0",
-        "@types/react": "^19.2.7",
-        "@types/react-dom": "^19.2.3",
-        "@vitejs/plugin-react-swc": "^4.2.2",
-        "eslint": "^9.39.2",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "eslint-plugin-react-refresh": "^0.4.26",
-        "gh-pages": "^6.3.0",
-        "globals": "^16.5.0",
-        "vite": "^7.3.0"
-    }
+  "name": "resenhas-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Interface web para gerenciamento de livros e resenhas.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "author": "Marcela Matos Dutra Rodrigues",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "globals": "^16.5.0",
+    "vite": "^7.3.0"
+  }
 }
