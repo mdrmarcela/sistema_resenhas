@@ -1,31 +1,28 @@
-import { Link, Navigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
+import { Link } from "react-router-dom";
 
 const App = () => {
-  const { user, authLoading } = useAuth();
-
-  if (authLoading) return <p>Carregando...</p>;
-
-  if (user) return <Navigate to="/livros" replace />;
-
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div className="card shadow" style={{ width: 420, maxWidth: "90vw" }}>
+    <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+      <section
+        className="card shadow"
+        style={{ width: 500, maxWidth: "90vw" }}
+        aria-labelledby="titulo-principal"
+      >
         <div className="card-body text-center p-4">
-          <h2 className="mb-2">Minha Biblioteca</h2>
-          <p className="text-muted mb-4">Entre ou cadastre-se para acessar seus livros e resenhas.</p>
+          <h1 id="titulo-principal" className="mb-3">
+            Minha Biblioteca
+          </h1>
 
-          <Link to="/usuarios/login" className="btn btn-primary w-100">
-            Entrar
+          <p className="text-muted mb-4">
+            Gerencie seus livros e registre suas resenhas em um só lugar.
+          </p>
+
+          <Link to="/livros" className="btn btn-primary">
+            Ver livros
           </Link>
-
-          <div className="mt-3">
-            <span className="text-muted">Ainda não tem conta? </span>
-            <Link to="/usuarios/register">Cadastre-se</Link>
-          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
