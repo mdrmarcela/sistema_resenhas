@@ -1,105 +1,152 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Toast from "../shared/Toast";
-import { useAuthFetch } from "../../auth/useAuthFetch";
-import { useAuth } from "../../auth/useAuth";
+
+const API_URL = "http://localhost:3000";
 
 const ResenhaEditForm = ({ resenha }) => {
   const { livro_id, id } = useParams();
-  const { user } = useAuth();
-  const authFetch = useAuthFetch();
   const navigate = useNavigate();
 
-  const [titulo, setTitulo] = useState(resenha?.titulo || "");
-  const [conteudo, setConteudo] = useState(resenha?.conteudo || "");
-  const [nota, setNota] = useState(resenha?.nota ?? 5);
+  const [form, setForm] = useState({
+    titulo: resenha.titulo || "",
+    conteudo: resenha.conteudo || "",
+    nota: resenha.nota || 5,
+  });
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState("");
+  const [salvando, setSalvando] = useState(false);
 
-  async function submitForm(e) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setForm((formAtual) => ({
+      ...formAtual,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setErro("");
+
+    if (!form.titulo.trim() || !form.conteudo.trim()) {
+      setErro("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    const nota = Number(form.nota);
+
+    if (nota < 1 || nota > 5) {
+      setErro("A nota deve estar entre 1 e 5.");
+      return;
+    }
+
+    const resenhaAtualizada = {
+      titulo: form.titulo.trim(),
+      conteudo: form.conteudo.trim(),
+      nota,
+    };
 
     try {
-      const body = {
-        titulo: titulo.trim(),
-        conteudo: conteudo.trim(),
-        nota: Number(nota),
-        usuario_id: user?.id, 
-      };
+      setSalvando(true);
 
-      const res = await authFetch(`/livros/${livro_id}/resenhas/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(
+        `${API_URL}/livros/${livro_id}/resenhas/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(resenhaAtualizada),
+        }
+      );
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.erro || "Erro ao atualizar resenha");
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          data.erro || "Não foi possível atualizar a resenha."
+        );
+      }
 
       navigate(`/livros/${livro_id}`);
-    } catch (e2) {
-      setError(e2.message);
+    } catch (error) {
+      setErro(error.message);
     } finally {
-      setLoading(false);
+      setSalvando(false);
     }
-  }
+  };
 
   return (
-    <form onSubmit={submitForm} className="m-2" style={{ maxWidth: 720 }}>
-      {error && <Toast error={error} setError={setError} />}
+    <form
+      onSubmit={handleSubmit}
+      className="mt-3"
+      style={{ maxWidth: 720 }}
+    >
+      {erro && (
+        <div className="alert alert-danger" role="alert">
+          {erro}
+        </div>
+      )}
 
-      <div className="my-2">
-        <label htmlFor="id-input-titulo" className="form-label">
-          Título
+      <div className="mb-3">
+        <label htmlFor="titulo-resenha" className="form-label">
+          Título *
         </label>
+
         <input
-          className="form-control"
+          id="titulo-resenha"
+          name="titulo"
           type="text"
-          id="id-input-titulo"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          placeholder="Título da resenha"
+          className="form-control"
+          value={form.titulo}
+          onChange={handleChange}
           required
         />
       </div>
 
-      <div className="my-2">
-        <label htmlFor="id-input-conteudo" className="form-label">
-          Conteúdo
+      <div className="mb-3">
+        <label htmlFor="conteudo-resenha" className="form-label">
+          Conteúdo *
         </label>
+
         <textarea
+          id="conteudo-resenha"
+          name="conteudo"
           className="form-control"
-          id="id-input-conteudo"
-          value={conteudo}
-          onChange={(e) => setConteudo(e.target.value)}
-          placeholder="Escreva sua resenha"
+          rows="5"
+          value={form.conteudo}
+          onChange={handleChange}
           required
         />
       </div>
 
-      <div className="my-2">
-        <label htmlFor="id-input-nota" className="form-label">
-          Nota (1 a 5)
+      <div className="mb-3">
+        <label htmlFor="nota-resenha" className="form-label">
+          Nota *
         </label>
+
         <input
-          className="form-control"
+          id="nota-resenha"
+          name="nota"
           type="number"
-          min={1}
-          max={5}
-          id="id-input-nota"
-          value={nota}
-          onChange={(e) => setNota(e.target.value)}
+          min="1"
+          max="5"
+          className="form-control"
+          value={form.nota}
+          onChange={handleChange}
           required
         />
       </div>
 
-      <div className="my-2">
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Salvando..." : "Salvar"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={salvando}
+      >
+        {salvando ? "Salvando..." : "Salvar alterações"}
+      </button>
     </form>
   );
 };

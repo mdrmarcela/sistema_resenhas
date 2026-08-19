@@ -38,17 +38,17 @@ const LivrosList = () => {
       "Tem certeza que deseja excluir este livro?"
     );
 
-    if (!confirmar) {
-      return;
-    }
+    if (!confirmar) return;
 
     try {
+      setErro("");
+
       const response = await fetch(`${API_URL}/livros/${id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        const dados = await response.json();
+        const dados = await response.json().catch(() => ({}));
 
         throw new Error(
           dados.erro || "Não foi possível excluir o livro."
