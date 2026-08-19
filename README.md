@@ -517,8 +517,3 @@ Atualização da interface
 
 ---
 
-## Autor
-
-**Marcela Matos Dutra Rodrigues**
-
-Projeto desenvolvido para a validação da  disciplina de **Desenvolvimento Web**.
