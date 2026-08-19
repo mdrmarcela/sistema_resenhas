@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+main {
+  width: 100%;
+}
+
+.card,
+.list-group-item {
+  word-break: break-word;
+}
+
+/* Responsividade para tablets e celulares */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .d-flex {
+    flex-wrap: wrap;
+  }
+
+  form {
+    width: 100%;
+  }
+}
+
+/* Ajustes para celulares menores */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .navbar-brand {
+    width: 100%;
+    text-align: center;
+  }
+}
