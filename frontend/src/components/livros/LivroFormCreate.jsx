@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthFetch } from "../../auth/useAuthFetch";
 import Toast from "../shared/Toast";
 
 const LivroFormCreate = () => {
@@ -13,7 +12,6 @@ const LivroFormCreate = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const authFetch = useAuthFetch();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,7 +19,6 @@ const LivroFormCreate = () => {
     setLoading(true);
 
     try {
-      // schema do back: titulo, autor, isbn obrigatórios; genero opcional (se enviar, não pode ser vazio)
       const body = {
         titulo: titulo.trim(),
         autor: autor.trim(),
@@ -29,19 +26,28 @@ const LivroFormCreate = () => {
       };
 
       const gen = genero.trim();
-      if (gen) body.genero = gen;
 
-      const res = await authFetch("/livros", {
+      if (gen) {
+        body.genero = gen;
+      }
+
+      const res = await fetch("http://localhost:3000/livros", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(body),
       });
 
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.erro || "Erro ao criar livro");
+
+      if (!res.ok) {
+        throw new Error(data?.erro || "Erro ao criar livro");
+      }
 
       navigate("/livros");
     } catch (err) {
-      if (err?.name !== "AbortError") setError(err?.message || "Erro inesperado");
+      setError(err?.message || "Erro inesperado");
     } finally {
       setLoading(false);
     }
@@ -55,6 +61,7 @@ const LivroFormCreate = () => {
         <label className="form-label" htmlFor="id-input-titulo">
           Título
         </label>
+
         <input
           className="form-control"
           id="id-input-titulo"
@@ -70,6 +77,7 @@ const LivroFormCreate = () => {
         <label className="form-label" htmlFor="id-input-autor">
           Autor
         </label>
+
         <input
           className="form-control"
           id="id-input-autor"
@@ -85,6 +93,7 @@ const LivroFormCreate = () => {
         <label className="form-label" htmlFor="id-input-genero">
           Gênero (opcional)
         </label>
+
         <input
           className="form-control"
           id="id-input-genero"
@@ -99,6 +108,7 @@ const LivroFormCreate = () => {
         <label className="form-label" htmlFor="id-input-isbn">
           ISBN
         </label>
+
         <input
           className="form-control"
           id="id-input-isbn"
@@ -106,12 +116,17 @@ const LivroFormCreate = () => {
           value={isbn}
           onChange={(e) => setIsbn(e.target.value)}
           placeholder="Digite o ISBN"
+          minLength="3"
           required
         />
       </div>
 
       <div className="my-2">
-        <button type="submit" className="btn btn-success" disabled={loading}>
+        <button
+          type="submit"
+          className="btn btn-success"
+          disabled={loading}
+        >
           {loading ? "Salvando..." : "Salvar"}
         </button>
       </div>
