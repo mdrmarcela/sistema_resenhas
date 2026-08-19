@@ -7,8 +7,11 @@ const LivrosCreate = () => {
     <>
       <Navbar />
 
-      <main className="container mt-3">
-        <section aria-labelledby="titulo-criar-livro">
+      <main className="container mt-3 mb-5">
+        <section
+          aria-labelledby="titulo-criar-livro"
+          style={{ maxWidth: 760 }}
+        >
           <Link to="/livros" className="btn btn-outline-secondary">
             Voltar
           </Link>
@@ -16,6 +19,10 @@ const LivrosCreate = () => {
           <h1 id="titulo-criar-livro" className="mt-3">
             Criar Livro
           </h1>
+
+          <p className="text-muted">
+            Preencha os dados abaixo para cadastrar um novo livro.
+          </p>
 
           <LivroFormCreate />
         </section>

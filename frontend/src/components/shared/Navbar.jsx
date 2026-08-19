@@ -4,15 +4,15 @@ const Navbar = () => {
   return (
     <header>
       <nav
-        className="navbar navbar-expand-lg navbar-dark bg-dark"
+        className="navbar navbar-dark bg-dark"
         aria-label="Navegação principal"
       >
-        <div className="container">
-          <Link className="navbar-brand" to="/">
+        <div className="container d-flex flex-wrap gap-3 justify-content-between align-items-center">
+          <Link className="navbar-brand mb-0" to="/">
             Minha Biblioteca
           </Link>
 
-          <div className="d-flex gap-2">
+          <div className="d-flex flex-wrap gap-2">
             <Link
               className="btn btn-outline-light"
               to="/livros"

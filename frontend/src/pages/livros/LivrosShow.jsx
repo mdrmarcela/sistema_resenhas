@@ -162,7 +162,7 @@ const LivrosShow = () => {
     <>
       <Navbar />
 
-      <main className="container mt-3">
+      <main className="container mt-3 mb-5">
         <Link to="/livros" className="btn btn-outline-secondary">
           Voltar
         </Link>
@@ -241,7 +241,7 @@ const LivrosShow = () => {
                       {resenha.conteudo}
                     </p>
 
-                    <div className="d-flex gap-2 mt-3">
+                    <div className="d-flex flex-wrap gap-2 mt-3">
                       <Link
                         className="btn btn-sm btn-outline-secondary"
                         to={`/livros/${id}/resenhas/${resenha.id}/edit`}
@@ -349,8 +349,13 @@ const LivrosShow = () => {
                         nota: event.target.value,
                       })
                     }
+                    aria-describedby="ajuda-nota"
                     required
                   />
+                </div>
+
+                <div className="form-text" id="ajuda-nota">
+                  De 1 a 5 estrelas
                 </div>
 
                 <button

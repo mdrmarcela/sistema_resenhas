@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const App = () => {
   return (
-    <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-3">
       <section
-        className="card shadow"
-        style={{ width: 500, maxWidth: "90vw" }}
+        className="card shadow w-100"
+        style={{ maxWidth: 500 }}
         aria-labelledby="titulo-principal"
       >
         <div className="card-body text-center p-4">
